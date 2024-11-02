@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр пациента</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Хедер -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Медицинская система</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/appointments">Записи</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/feedback">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/patients">Пациенты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prescriptions">Рецепты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/tests">Анализы</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a class="btn btn-outline-light" href="/login">Войти</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Просмотр пациента</h1>
+        <p><strong>ID:</strong> <span th:text="${patient.id}"></span></p>
+        <p><strong>Имя:</strong> <span th:text="${patient.name}"></span></p>
+        <p><strong>Дата рождения:</strong> <span th:text="${patient.birthDate}"></span></p>
+        <p><strong>Пол:</strong> <span th:text="${patient.gender}"></span></p>
+        <a th:href="@{/patients}" class="btn btn-secondary">Назад</a>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>© 2024 Медицинская система. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>

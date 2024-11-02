@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактировать тест</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Медицинская система</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/appointments">Управление записями</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/departments">Управление отделами</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/feedback">Управление отзывами</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/patients">Управление пациентами</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prescriptions">Управление рецептами</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/roles">Управление ролями</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/tests">Управление анализами</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/users">Управление пользователями</a></li>
+                </ul>
+                <div class="d-flex">
+                    <span class="navbar-text me-2">Добро пожаловать, Администратор</span>
+                    <a class="btn btn-outline-light" href="/logout">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Редактировать тест</h1>
+        <form th:action="@{/tests/{id}(id=${test.id})}" th:object="${test}" method="post">
+            <div class="mb-3">
+                <label for="patient" class="form-label">Пациент</label>
+                <select class="form-select" id="patient" th:field="*{patient}" required>
+                    <option value="" disabled>Выберите пациента</option>
+                    <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}" th:if="${patient.id == test.patient.id}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Название теста</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            </div>
+            <div class="mb-3">
+                <label for="testType" class="form-label">Тип теста</label>
+                <input type="text" class="form-control" id="testType" th:field="*{testType}" required>
+            </div>
+            <div class="mb-3">
+                <label for="testDate" class="form-label">Дата теста</label>
+                <input type="date" class="form-control" id="testDate" th:field="*{testDate}" required>
+            </div>
+            <div class="mb-3">
+                <label for="results" class="form-label">Результаты</label>
+                <textarea class="form-control" id="results" th:field="*{results}" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Обновить</button>
+            <a th:href="@{/tests}" class="btn btn-secondary">Назад</a>
+        </form>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>© 2024 Медицинская система. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>

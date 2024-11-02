@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактировать отзыв</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Редактировать отзыв</h1>
+        <form th:action="@{/feedback/{id}(id=${feedback.id})}" th:object="${feedback}" method="post">
+            <div class="mb-3">
+                <label for="patient" class="form-label">Пациент</label>
+                <input type="text" id="patient" class="form-control" th:value="${feedback.patient != null ? feedback.patient.name : 'Не указан'}" readonly>
+                <input type="hidden" th:field="*{patient}" th:value="${feedback.patient.id}">
+            </div>
+            <div class="mb-3">
+                <label for="appointment" class="form-label">Дата и время записи</label>
+                <input type="text" id="appointment" class="form-control"
+                       th:value="${feedback.appointment != null ? #temporals.format(feedback.appointment.appointmentDate, 'dd-MM-yyyy HH:mm') : 'Нет данных'}"
+                       readonly>
+                <input type="hidden" th:field="*{appointment}" th:value="${feedback.appointment.id}">
+            </div>
+            <div class="mb-3">
+                <label for="comments" class="form-label">Комментарии</label>
+                <textarea class="form-control" id="comments" th:field="*{comments}" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="rating" class="form-label">Рейтинг</label>
+                <select class="form-select" id="rating" th:field="*{rating}" required>
+                    <option value="1" th:selected="${feedback.rating == 1}">1</option>
+                    <option value="2" th:selected="${feedback.rating == 2}">2</option>
+                    <option value="3" th:selected="${feedback.rating == 3}">3</option>
+                    <option value="4" th:selected="${feedback.rating == 4}">4</option>
+                    <option value="5" th:selected="${feedback.rating == 5}">5</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Обновить</button>
+            <a th:href="@{/feedback}" class="btn btn-secondary">Назад</a>
+        </form>
+    </div>
+</body>
+</html>

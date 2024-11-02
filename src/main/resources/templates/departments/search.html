@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Departments</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div th:insert="~{fragments/header :: header}"></div>
+    <div class="container mt-5">
+        <h1>Search Departments</h1>
+        <form th:action="@{/departments/search}" method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="name" placeholder="Enter department name" required>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+        <div th:if="${departments != null}">
+            <h2>Search Results</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="department : ${departments}">
+                        <td th:text="${department.id}">1</td>
+                        <td th:text="${department.name}">Department Name</td>
+                        <td>
+                            <a th:href="@{/departments/{id}(id=${department.id})}" class="btn btn-info">View</a>
+                            <a th:href="@{/departments/{id}/edit(id=${department.id})}" class="btn btn-warning" th:if="${#authentication.principal.authorities.contains('ROLE_ADMIN')}">Edit</a>
+                            <form th:action="@{/departments/{id}/delete(id=${department.id})}" method="post" style="display:inline;" th:if="${#authentication.principal.authorities.contains('ROLE_ADMIN')}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${departments.size() == 0}">
+                        <td colspan="3">No departments found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>
